@@ -130,7 +130,7 @@ function App() {
   return (
     <>
     <div className="App">
-      <h1>Youtube Tutorial</h1>
+      <h1>dapowallet</h1>
       {accounts.length ? (
         <>
           <p>{accounts}</p>
