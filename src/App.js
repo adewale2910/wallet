@@ -2,15 +2,11 @@ import { useEffect, useState } from "react";
 import { SignClient } from "@walletconnect/sign-client";
 import { Web3Modal } from "@web3modal/standalone";
 import "./App.css";
-
 const web3Modal = new Web3Modal({
   projectId: process.env.REACT_APP_PROJECT_ID,
   standaloneChains: ["eip155:5"],
 });
-
 function App() {
-
- 
   const [signClient, setSignClient] = useState();
   const [sessions, setSessions] = useState([]);
   const [accounts, setAccounts] = useState([]);
@@ -27,7 +23,6 @@ function App() {
       console.log(e);
     }
   }
-
   async function handleConnect() {
     if (!signClient) throw Error("Cannot connect. Sign Client is not created");
     try {
@@ -39,11 +34,9 @@ function App() {
           events: ["connect", "disconnect"],
         },
       };
-
       const { uri, approval } = await signClient.connect({
         requiredNamespaces: proposalNamespace,
       });
-
       if (uri) {
         web3Modal.openModal({ uri });
         const sessionNamespace = await approval();
@@ -54,7 +47,6 @@ function App() {
       console.log(e);
     }
   }
-
   async function onSessionConnect(session) {
     if (!session) throw Error("session doesn't exist");
     try {
@@ -64,7 +56,6 @@ function App() {
       console.log(e);
     }
   }
-
   async function handleDisconnect() {
     try {
       await signClient.disconnect({
@@ -77,7 +68,6 @@ function App() {
       console.log(e);
     }
   }
-
   async function subscribeToEvents(client) {
     if (!client)
       throw Error("No events to subscribe to b/c the client does not exist");
@@ -91,7 +81,6 @@ function App() {
       console.log(e);
     }
   }
-
   async function handleSend() {
     try {
       const tx = {
@@ -115,18 +104,15 @@ function App() {
       console.log(e);
     }
   }
-
   const reset = () => {
     setAccounts([]);
     setSessions([]);
   };
-
-  useEffect(() => {
+ useEffect(() => {
     if (!signClient) {
     createClient();
     }
   }, [signClient]);
-
   return (
     <>
     <div className="App">
@@ -136,7 +122,8 @@ function App() {
           <p>{accounts}</p>
           <button onClick={handleDisconnect}>Disconnect</button>
           <button onClick={handleSend}>Send</button>
-          { txnHash && <p>View your transaction <a href={`https://goerli.etherscan.io/tx/${txnHash}`} target="_blank" rel="noreferrer">here</a>!</p>}
+          { txnHash && <p>View your transaction <a href={`https://beaconcha.in/${txnHash}`} target="_blank" rel="noreferrer">here</a>!</p>}
+          {/* { txnHash && <p>View your transaction <a href={`https://goerli.etherscan.io/tx/${txnHash}`} target="_blank" rel="noreferrer">here</a>!</p>} */}
         </>
       ) : (
         <button onClick={handleConnect} disabled={!signClient}>
